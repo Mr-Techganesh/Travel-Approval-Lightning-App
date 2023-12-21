@@ -45,18 +45,18 @@ Creating your organization’s travel approval app is to create the data model. 
 -  Status  
 *data type: Picklist*
 
-values:
+*values:*
 
-1.	New
-2.	Submitted
-3.	Pending Approval
-4.	Approved
-5.	Rejected
-6.	Draft
-•	Create the Trip Start Date field with a Date data type.
-•	Create the Trip End Date field with a Date data type.
-•	Create the Out-of-State field with a Checkbox data type.
-•	Create the Destination State field with a Text data type
+-  New
+-  Submitted
+-  Pending Approval
+-  Approved
+-  Rejected
+-  Draft
+-  Create the Trip Start Date field with a Date data type.
+-  Create the Trip End Date field with a Date data type.
+-  Create the Out-of-State field with a Checkbox data type.
+-  Create the Destination State field with a Text data type
 
 Create the Department field with a Lookup Relationship data type, then select Department for the Related To field
 
@@ -81,12 +81,12 @@ Select Travel Approval from the Related To menu.
 
 ## Customize the User Interface for a Travel Approval App
 
-Create a User
-•	Profile System Administrator
-Enable Approval Settings
-•	Select your user account  Set your manager as Eric Executive
+*Create a User*
+-  Profile System Administrator
+-  Enable Approval Settings
+ -  select your user account  Set your manager as Eric Executive
 
-Create and Customize a List View
+*Create and Customize a List View*
 
 select the Travel App and select the Travel Approvals tab.
 1.	Select record TA-00001 under All LIST VIEWS.
@@ -109,7 +109,7 @@ select the Travel App and select the Travel Approvals tab.
 •	Trip Start Date
 •	Trip End Date
 
-custom list view:
+*custom list view:*
 
 In this scenario, you create a list view with a filter to show all out-of-state travel requests that have not been approved or rejected. This way you can see exactly what approvals are still outstanding.
 1.	Click the List View gear icon and select New option.
@@ -142,9 +142,9 @@ In this scenario, you create a list view with a filter to show all out-of-state 
 Keep up the great work! Move on to the next step and customize the page layout of the Travel Approval 
 
 
-Customize the Travel Approval Object Page Layout
+## Customize the Travel Approval Object Page Layout
 
-Customize a Page Layout
+*Customize a Page Layout*
 1.	Travel Approvals tab and open TA-00001.
 2.	Click   and then select Edit Page. 
 3.	Left-click once in the middle of the form to select it. You should see a light blue border around the form. On the right-hand side, click Travel Approval Layout (previewed). 
@@ -154,14 +154,16 @@ Customize a Page Layout
 7.	Drag Out-of-State and Destination State from the Information section
 8.	Drag the Department field from the left-hand column of the Information section to the right-hand column.
 
-Edit the Expense Item Related List
+*Edit the Expense Item Related List*
 Related lists can be added to any Salesforce page they are related or linked to.
 1.	From Page Layouts in the Object Manager, select Travel Approval Layout. Scroll down to the Expense Items related list. Click the wrench icon in the header tab. 
 2.	Move the Expense Type and Amount fields from Available Fields to Selected Fields.
 3.	Click OK. Click Yes if you’re asked if you want to Overwrite Users’ Related Lists Customizations.
 4.	Click Save.
 5.	Navigate back to a Travel Approval record and look at the related lists. You should see the extra columns you added to the expense item related list.
-Enable Chatter Feed Tracking
+   
+*Enable Chatter Feed Tracking*
+
 Enable Chatter feed tracking on the Travel Approval object.
 1.	From Setup, enter Feed Tracking in the Quick Find box, then select Feed Tracking.
 2.	In the list of available objects, click Travel Approval.
@@ -170,23 +172,29 @@ Enable Chatter feed tracking on the Travel Approval object.
 o	Destination State
 o	Status
 5.	Click Save
-Add Business Logic to a Travel Approval App
 
-Validation Rules
+## Add Business Logic to a Travel Approval App
+
+*Validation Rules*
  Validation rules let you set up business-specific criteria to prevent users from saving invalid data in one or more fields. A validation rule evaluates a formula when a record is saved. If a rule’s criteria aren’t met, users see a custom error message and the record doesn’t save. If a rule’s criteria are met, the record saves. Use validation rules to improve data quality by applying conditions, ensuring proper formatting, and enforcing consistency.
 1.	Select Travel Approval to open the configuration page for the Travel Approval object.
 2.	Click Validation Rules.
 3.	Click New. 
 
-Parameter	Value
+Parameter Value
 Rule Name	Trip end date after start date
-Active	Make sure to keep this selected/checked.
-Condition Formula	Trip_End_Date__c < Trip_Start_Date__c       NOTE: When writing a validation rule, your condition formula should return “true” for your error condition.
+
+Active	Make sure to keep this selected/checked
+
+Condition Formula:	Trip_End_Date__c < Trip_Start_Date__c 
+
 Error Message	Trip end date must be greater than or equal to start date
+
 Error Location	Select Field and pick 
   
 
-Create a Roll-Up Summary Field
+*Create a Roll-Up Summary Field*
+
  Travel Approval object that automatically sums up the total amount of expenses from the related Expense Items. Salesforce has a field called a roll-up summary field that provides this functionality.
 1.	From the Travel Approval object, select Fields & Relationships.
 2.	Click New.
@@ -202,7 +210,7 @@ Filter Criteria: All records should be included in the calculation
 
  
 
-Formula Fields
+*Formula Fields*
 create a field on the Travel Approval object that shows a visual indicator (that is, image file) based on the value of the Status field. For example, one image displays for Rejected approvals and a different image for Approved approvals. This provides a quick and simple way for users of the system to get an indicator of the status of a travel approval.
 
 Parameter	Value
@@ -212,7 +220,8 @@ Cache-Control	Public
 
  
 
-Add a Field
+*Add a Field*
+
 Next, create a new field on the Travel Approval object to show an image based on the Status field. Salesforce has a formula field data type that can be used for this.
 1.	Click the   icon next to the Object Manager tab. This provides a shortcut to the Object Manager for the recent objects you have edited.
 2.	Select Travel Approval
@@ -232,23 +241,25 @@ IF( ISPICKVAL( Status__c , 'Approved') , IMAGE("/resource/StatusImages/thumbs-up
 IF ( ISPICKVAL( Status__c , 'Rejected'), IMAGE("/resource/StatusImages/thumbs-down.png", "Rejected", 20, 20),
 IMAGE("/resource/StatusImages/draft.png", "In-Process", 20, 20)))
 
-Flow
+## Flow
 
 The last business rule functionality to implement before testing your application is a rule to set the Out-of-State checkbox field on the Travel Approval object if out-of-state travel has been chosen. Salesforce offers workflow capabilities that provide a declarative, drag-and-drop design environment to build our business process logic
 •	Salesforce Flow—The product that encompasses building, managing, and running flows and processes.
 •	Flow Builder—A point-and-click tool for building flows.
 •	Flow—An application that automates a business process by collecting data and doing something in your Salesforce org or an external system.
-New Flow.
+
+*New Flow.*
+
 Select Record-Triggered Flow then click Create.
 
-Parameter	Value
+ParameterValue:
+
 Object	Travel Approval
-Configure Trigger	Trigger the flow when: A record is created or updated
-Condition Requirements	None
-Optimize the Flow For:	Fast Field Updates
+Configure Trigger: Trigger the flow when: A record is created or updated
+Condition Requirements: None
+Optimize the Flow For Fast Field Updates
 
-Add a Decision Element
-
+*Add a Decision Element*
 
 Parameter	Value
 Label	Yes Out of State
