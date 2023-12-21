@@ -191,6 +191,9 @@ Condition Formula:	Trip_End_Date__c < Trip_Start_Date__c
 Error Message	Trip end date must be greater than or equal to start date
 
 Error Location	Select Field and pick 
+
+![image](https://github.com/strganeshmoorthy/Travel-Approval-Lightning-App/assets/117075085/1fedc22f-f662-46fa-8233-dddcca98715c)
+
   
 
 *Create a Roll-Up Summary Field*
