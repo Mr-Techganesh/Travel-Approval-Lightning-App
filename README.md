@@ -2,8 +2,10 @@
 
 ## Business Requirements
 
+> Your organization has decided to implement a custom travel approval app. Up until now, you had a travel approval process in place based on emailing spreadsheets. It had no central repository or enforcement of the process, resulting in the inability to report on travel approval activities across the organization. You need to create an application that meets these requirements
 Your organization has decided to implement a custom travel approval app. Up until now, you had a travel approval process in place based on emailing spreadsheets. It had no central repository or enforcement of the process, resulting in the inability to report on travel approval activities across the organization. You need to create an application that meets these requirements
-Your organization has decided to implement a custom travel approval app. Up until now, you had a travel approval process in place based on emailing spreadsheets. It had no central repository or enforcement of the process, resulting in the inability to report on travel approval activities across the organization. You need to create an application that meets these requirements
+
+
 
 -  Each employee must submit an electronic request in the system for future travel.
 
@@ -14,6 +16,8 @@ Your organization has decided to implement a custom travel approval app. Up unti
 -  Managers need reports and dashboards to track key travel request trends and KPIs.
 
 -  In addition, employees and managers must be able to access their travel requests, approvals, and dashboards via mobile devices.
+
+  
 
 ## Process in the Project
 
@@ -502,6 +506,37 @@ You can take your analysis to the next level by placing your reports on a Salesf
 6.	Click + Component.
 7.	Click the Travel Request by Department report and click Select. You are presented with options to configure this component for the dashboard.
 8.	Make sure the Y-Axis is set to Department and the X-Axis is set to Record Count.
+
+
+
+
+## Dashboard View 
+
+   ![Screenshot 2023-12-23 235731](https://github.com/Mr-Techganesh/Travel-Approval-Lightning-App/assets/117075085/d9e890e1-2257-4163-99bb-3bfb094e4538)
+
+
+
+
+## Report View
+
+
+![report view](https://github.com/Mr-Techganesh/Travel-Approval-Lightning-App/assets/117075085/c5de2fd7-d929-4fd2-9aaa-21800ef16781)
+
+
+
+## Department View
+
+
+![dept view](https://github.com/Mr-Techganesh/Travel-Approval-Lightning-App/assets/117075085/a287ba05-9489-4f2c-8f49-8c837b89c2f2)
+
+
+
+
+## Travel Approval View
+
+![travel app view](https://github.com/Mr-Techganesh/Travel-Approval-Lightning-App/assets/117075085/5c9a4612-3e7c-46ab-b999-1fec9722c9cc)
+
+
 
 
 
