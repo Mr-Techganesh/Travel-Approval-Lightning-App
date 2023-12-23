@@ -132,19 +132,21 @@ In this scenario, you create a list view with a filter to show all out-of-state 
 
  
 11.	Use the Add arrow to move the following fields to the Visible Fields column, in order.
+    
 •	Department
 •	Created By
 •	Status
 •	Destination State
 •	Trip Start Date
 •	Trip End Date
-12.	Click Save.
+13.	Click Save.
 Keep up the great work! Move on to the next step and customize the page layout of the Travel Approval 
 
 
 ## Customize the Travel Approval Object Page Layout
 
 *Customize a Page Layout*
+
 1.	Travel Approvals tab and open TA-00001.
 2.	Click   and then select Edit Page. 
 3.	Left-click once in the middle of the form to select it. You should see a light blue border around the form. On the right-hand side, click Travel Approval Layout (previewed). 
@@ -155,7 +157,9 @@ Keep up the great work! Move on to the next step and customize the page layout o
 8.	Drag the Department field from the left-hand column of the Information section to the right-hand column.
 
 *Edit the Expense Item Related List*
+
 Related lists can be added to any Salesforce page they are related or linked to.
+
 1.	From Page Layouts in the Object Manager, select Travel Approval Layout. Scroll down to the Expense Items related list. Click the wrench icon in the header tab. 
 2.	Move the Expense Type and Amount fields from Available Fields to Selected Fields.
 3.	Click OK. Click Yes if you’re asked if you want to Overwrite Users’ Related Lists Customizations.
@@ -176,21 +180,27 @@ o	Status
 ## Add Business Logic to a Travel Approval App
 
 *Validation Rules*
+
  Validation rules let you set up business-specific criteria to prevent users from saving invalid data in one or more fields. A validation rule evaluates a formula when a record is saved. If a rule’s criteria aren’t met, users see a custom error message and the record doesn’t save. If a rule’s criteria are met, the record saves. Use validation rules to improve data quality by applying conditions, ensuring proper formatting, and enforcing consistency.
+ 
 1.	Select Travel Approval to open the configuration page for the Travel Approval object.
 2.	Click Validation Rules.
 3.	Click New. 
 
-Parameter Value
-Rule Name	Trip end date after start date
+* Parameter Value*
 
-Active	Make sure to keep this selected/checked
 
-Condition Formula:	Trip_End_Date__c < Trip_Start_Date__c 
 
-Error Message	Trip end date must be greater than or equal to start date
+| Rule Name | Trip end date after start date |
+| --------- |------------------------------- |
+| Active | Make sure to keep this selected/checked |
+| Condition Formula | 	```  Trip_End_Date__c < Trip_Start_Date__c ```  |
+| Error Message |  Trip end date must be greater than or equal to start date |
+| Error Location | Select Field and pick |
 
-Error Location	Select Field and pick 
+
+
+
 
 ![image](https://github.com/strganeshmoorthy/Travel-Approval-Lightning-App/assets/117075085/1fedc22f-f662-46fa-8233-dddcca98715c)
 
@@ -204,22 +214,34 @@ Error Location	Select Field and pick
 3.	Select the Roll-Up Summary data type.
 4.	Click Next.
 5.	Enter the following values for the field details:
-•	Field Label: Total Expenses
-Configure the roll-up calculation.
-Summarized Object: Expense Items
-Roll-Up Type: SUM
-Field to Aggregate: Amount
-Filter Criteria: All records should be included in the calculation
+   
+Field Label: Total Expenses
+
+Configure the roll-up calculation
+
+
+
+
+| Summarized Object | Expense Items |
+| ----------------- | ------------- |
+| Roll-Up Type |  SUM |
+| Field to Aggregate | Amount |
+| Filter Criteria | All records should be included in the calculation |
 
  
 
 *Formula Fields*
+
 create a field on the Travel Approval object that shows a visual indicator (that is, image file) based on the value of the Status field. For example, one image displays for Rejected approvals and a different image for Approved approvals. This provides a quick and simple way for users of the system to get an indicator of the status of a travel approval.
 
-Parameter	Value
-Name	StatusImages  (Important: there are no spaces, and the S and I are capitalized)
-File	StatusImages.zip
-Cache-Control	Public
+
+
+
+| Parameter | Value |
+| --------- | ------ |
+| Name| StatusImages  (Important: there are no spaces, and the S and I are capitalized) |
+| File | StatusImages.zip |
+| Cache-Control |  Public |
 
  
 
@@ -240,9 +262,11 @@ Next, create a new field on the Travel Approval object to show an image based on
 8.	Click Next.
 9.	Copy and paste the following formula into the formula editor.
 
+```
 IF( ISPICKVAL( Status__c , 'Approved') , IMAGE("/resource/StatusImages/thumbs-up.png", "Accepted", 20, 20),
 IF ( ISPICKVAL( Status__c , 'Rejected'), IMAGE("/resource/StatusImages/thumbs-down.png", "Rejected", 20, 20),
 IMAGE("/resource/StatusImages/draft.png", "In-Process", 20, 20)))
+```
 
 ## Flow
 
@@ -257,30 +281,46 @@ Select Record-Triggered Flow then click Create.
 
 ParameterValue:
 
-Object	Travel Approval
-Configure Trigger: Trigger the flow when: A record is created or updated
-Condition Requirements: None
+| Object | Travel Approval |
+| -------| ----------
+| Configure Trigger | Trigger the flow when: A record is created or updated |
+| Condition Requirements |  None |
+
+
+
 Optimize the Flow For Fast Field Updates
+
+
 
 *Add a Decision Element*
 
-Parameter	Value
-Label	Yes Out of State
-Outcome API Name	Yes_Out_of_State (This automatically gets set when you tab out of the Label field)
-Condition Requirements to Execute Outcome	All Conditions Are Met (AND)
-Resource	$Record > Destination State
-Operator	Does Not Equal
-Value	TX
+
+
+| Parameter | Value |
+| --------  | ----- |
+| Label |  Yes Out of State |
+| Outcome API Name | Yes_Out_of_State (This automatically gets set when you tab out of the Label field) |
+|Condition Requirements to Execute Outcome | All Conditions Are Met (AND) |
+| Resource | Record > Destination State |
+| Operator | Does Not Equal |
+| Value | TX |
+
+
+
 When to Execute the Outcome	Only if the record that triggered the flow to run is updated to meet the condition requirements
 	
 
-Parameter	Value
-Label	In State
-Outcome API Name	In_State (This automatically gets set when you tab out of the Label field)
-Condition Requirements to Execute Outcome	All Conditions Are Met (AND)
-Resource	$Record > Destination State
-Operator	Equals
-Value	TX
+
+
+| Parameter | Value |
+| --------  | ----- |
+| Label |  In State |
+| Outcome API Name | In_State (This automatically gets set when you tab out of the Label field) |
+|Condition Requirements to Execute Outcome | All Conditions Are Met (AND) |
+| Resource | $Record > Destination State |
+| Operator | Equals |
+| Value | TX |
+
 When to Execute Outcome	Only if the record that triggered the flow to run is updated to meet the condition requirements
 
 
@@ -288,15 +328,17 @@ Create an Action for the Flow Using Update Records Elements
 1.	From the left-hand column, the flow toolbox, drag an Update Records element onto the flow screen.
 2.	Set the parameters for the element
 
-BLOCK DIAGRAM:
- 
+## BLOCK DIAGRAM:
+
+ ![image](https://github.com/Mr-Techganesh/Travel-Approval-Lightning-App/assets/117075085/0834fa11-b202-44fe-8c38-3fa636b9a965)
+
 
 1.	Click Save.
 2.	Flow Label: Out of State Travel Flag. Flow API Name will auto populate to Out_of_State_Travel_Flag. Leave Description blank and advanced settings as is.
 3.	Click Save. 
  
 
-Approval Process
+## Approval Process
 
 In this section, you create an approval process that all travel approvals must follow. We keep it simple and use the following logic.
 
@@ -308,78 +350,130 @@ If the trip is out of state, the approval is also sent to a travel coordinator f
 
 
 
-Parameters:
+*Parameters*
 
-Parameter	Value
-Name	Travel Approval Request
-Unique Name	Travel_Approval_Request (This automatically gets sent when you tab out of the Name field)
-Approval Assignment Email Template	Leave blank
+
+
+
+| Parameter |  Value |
+| --------- | ------ |
+| Name | Travel Approval Request |
+|Unique Name  | Travel_Approval_Request (This automatically gets sent when you tab out of the Name field) |
+| Approval Assignment Email Template | 	Leave blank |
+
+
+
+
 Add the Submit for Approval button and Approval History related list to all Travel Approval page layouts	Leave this selected/checked
-Use Approver Field of Travel Approval Owner	Leave unselected/unchecked.
-Specify Entry Criteria	Use this approval process if the following: criteria are met
+Use Approver Field of Travel Approval Owner
 
-Field	Travel Approval: Total Expenses
-Operator	greater than
-Value	0
-Select Approver	•	Automatically assign an approver using a standard or custom hierarchy field
-•	Select Manager from the option list
+Specify Entry Criteria	Use this approval process if the following: criteria are met.
 
 
-Create an Approval Step for Out-of-State Travel
- details:
-Parameter	Value
-Name	Travel Coordinator Approval
-Unique Name	Travel_Coordinator_Approval (This automatically gets set when you tab out of the Name field)
-Step Number	2
 
-Add Logic
-Next, add logic to set the status of the approval request based on if it was Approved or Rejected. We do this by creating a Final Approval action and a Final Rejection action. Let’s start by creating an action if the request was approved by all approvers. 
+| Parameters | Values |
+| ---------- | ------ |
+| Field: | Travel Approval: Total Expenses |
+| Operator | greater than |
+| Value |  0 |
+
+
+
+*Select Approver*	 
+
+1.  Automatically assign an approver using a standard or custom hierarchy field
+1.  Select Manager from the option list
+
+
+*Create an Approval Step for Out-of-State Travel*
+
+
+*details*
+
+
+| Parameter | Value |
+| --------- | ----- |
+| Name |  Travel Coordinator Approval |
+| Unique Name | Travel_Coordinator_Approval (This automatically gets set when you tab out of the Name field) |
+| Step Number | 2 |
+
+
+
+
+*Add Logic*
+
+Next, add logic to set the status of the approval request based on if it was Approved or Rejected. We do this by creating a Final Approval action and a Final Rejection action. Let’s start by creating an action if the request was approved by all approvers.
+
 1.	Click Add New in the Final Approval Actions area of the approval process form.
 2.	Select Field Update from the dropdown list.
  
 3.	Enter the following values.
 
-Parameter	Value
-Name	Set Status to Approved
-Unique Name	Set_Status_to_Approved (This automatically gets sent when you tab out of the Name field)
-Field to Update	Status
-Re-evaluate Workflow Rules after Field Change	Leave unchecked
-Picklist Options	Select A specific value and select Approved from the dropdown list.
+
+   
+
+| Parameter | Value |
+| --------- | ------|
+| Name | Set Status to Approved |
+| Unique Name | Set_Status_to_Approved (This automatically gets sent when you tab out of the Name field) |
+| Field to Update | Status |
+
+
+
+
 
 set the status value to Rejected if any approver rejects the travel approval request. 
-1.	Click Add New in the Final Rejection Actions area of the approval process form.
-2.	Select Field Update from the dropdown list.  
-3.	Enter the following values.
-Parameter	Value
-Name	Set Status to Rejected
-Unique Name	Set_Status_to_Rejected (This automatically gets sent when you tab out of the Name field)
-Field to Update	Status
-Re-evaluate Workflow Rules after Field Change	Leave unchecked
-Picklist Options	Select A specific value and select Rejected from the dropdown list.
-4.	Click Save.
-5.	Click Activate.
-6.	Select OK in the popup window to confirm activation. Your approval process should now have the Active flag checked.  
 
-set the status value to Rejected if any approver rejects the travel approval request. 
 1.	Click Add New in the Final Rejection Actions area of the approval process form.
 2.	Select Field Update from the dropdown list.  
 3.	Enter the following values.
 
-Parameter	Value
-Name	Set Status to Rejected
-Unique Name	Set_Status_to_Rejected (This automatically gets sent when you tab out of the Name field)
-Field to Update	Status
-Re-evaluate Workflow Rules after Field Change	Leave unchecked
-Picklist Options	Select A specific value and select Rejected from the dropdown list.
+
+   
+   
+| Parameter |	Value |
+| --------- | --------|
+| Name | Set Status to Rejected |
+| Unique Name |	Set_Status_to_Rejected (This automatically gets sent when you tab out of the Name field) |
+| Field to Update | Status |
+| Picklist Options | Select A specific value and select Rejected from the dropdown list. |
+
+
+5.	Click Save.
+6.	Click Activate.
+7.	Select OK in the popup window to confirm activation. Your approval process should now have the Active flag checked.  
+
+set the status value to Rejected if any approver rejects the travel approval request. 
+
+1.	Click Add New in the Final Rejection Actions area of the approval process form.
+	
+4.	Select Field Update from the dropdown list.
+   
+5.	Enter the following values.
+
+
+
+   
+
+| Parameter | Value |
+| --------- | ----- |
+| Name | Set Status to Rejected |
+| Unique Name | Set_Status_to_Rejected (This automatically gets sent when you tab out of the Name field) |
+| Field to Update | Status |
+| Picklist Options | Select A specific value and select Rejected from the dropdown list.|
+
+
+
+
 4.	Click Save.
-5.	Click Activate.
-6.	Select OK in the popup window to confirm activation. Your approval process should now have the Active flag checked.  
 
 
-Add Reports and Dashboards to a Travel Approval App
+## Add Reports and Dashboards to a Travel Approval App
 
-Create a Dashboard
+*Create a Dashboard*
+
 You can take your analysis to the next level by placing your reports on a Salesforce dashboard for quick and easy viewing. A dashboard provides an interactive visual display of key metrics and trends. Multiple dashboard components can be shown together on a single dashboard layout, creating rich visual displays of multiple reports that have a common theme.
+
 1.	Click the Dashboards tab.
 2.	Click New Dashboard. 
 
@@ -388,14 +482,20 @@ You can take your analysis to the next level by placing your reports on a Salesf
 
 
 
-3.	Enter the following values.
+3.	Enter the following values
 
-Parameter	Value
-Name	Travel Requests Dashboard
-Description	Leave blank
-Folder	Private Dashboards
+
+   
+
+| Parameter | Value |
+| --------- | ----- |
+| Name | Travel Requests Dashboard
+| Description | Leave blank
+| Folder | Private Dashboards
 	
 	
+
+
 
 4.	Click Create.  You can now add reports to your dashboard and move them on to different 
 5.	sections of the dashboard. You can also stretch the components across the grid to have the exact layout of components you need for your dashboard.
